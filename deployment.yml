@@ -26,6 +26,11 @@ spec:
         env:                     # 環境変数
           - name: GET_HOSTS_FROM
             value: dns
+          - name: TEST_KEY
+            valueFrom:
+              configMapKeyRef:
+                name: config-example
+                key: player_initial_lives
         ports:
           - containerPort: 8080
         readinessProbe:          # ヘルスチェックの設定
