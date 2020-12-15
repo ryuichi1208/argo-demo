@@ -24,10 +24,10 @@ spec:
             cpu: 100m
             memory: 100Mi
         env:                     # 環境変数
-        - name: GET_HOSTS_FROM
-          value: dns
+          - name: GET_HOSTS_FROM
+            value: dns
         ports:
-        - containerPort: 8080
+          - containerPort: 8080
         readinessProbe:          # ヘルスチェックの設定
           httpGet:               # ヘルスチェックでアクセスするhttpエンドポイントの情報を書く。
             path: /
@@ -46,7 +46,6 @@ spec:
           - 8.8.8.8
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
