@@ -1,0 +1,63 @@
+apiVersion: apps/v1 # apply時に使用するAPIの種別。リソース(kind)によって決まる
+kind: Deployment    # Deploymentのマニフェスト
+metadata:           # Deploymentのmetadata
+  name: helloweb    # Deploymentリソースの名前
+  labels:
+    app: hello
+spec:
+  replicas: 2       # ReplicaSetが生成・管理するPodの数
+  selector:
+    matchLabels:
+      app: hello    # ReplicaSetがPodを検索するときのLabel
+      tier: web
+  template:
+    metadata:
+      labels:
+        app: hello
+        tier: web
+    spec:
+      containers:
+      - name: hello-app
+        image: gcr.io/google-samples/hello-app:2.0
+        resources:               # 使用するCPU, Memoryの指定
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        env:                     # 環境変数
+        - name: GET_HOSTS_FROM
+          value: dns
+        ports:
+        - containerPort: 8080
+        readinessProbe:          # ヘルスチェックの設定
+          httpGet:               # ヘルスチェックでアクセスするhttpエンドポイントの情報を書く。
+            path: /
+            port: 8080
+          initialDelaySeconds: 5 # コンテナが起動してからヘルスチェックを始めるまでの秒数。Default: 0
+          timeoutSeconds: 1      # ヘルスチェックのタイムアウト秒数。最小で1秒。Default: 1
+          periodSeconds: 5       # ヘルスチェックの間隔。最小で1秒。Default: 10
+          successThreshold: 1    # Failure状態の時、何回成功したらSuccessになるか。最小で1回。Default: 1
+        livenessProbe:          # ヘルスチェックの設定
+          httpGet:               # ヘルスチェックでアクセスするhttpエンドポイントの情報を書く。
+            path: /
+            port: 8080
+      dnsPolicy: "None"          # DNSポリシーの設定
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloweb
+  labels:
+    app: hello
+spec:
+  selector:
+    app: hello
+    tier: web
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: NodePort
