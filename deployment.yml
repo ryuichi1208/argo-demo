@@ -67,7 +67,7 @@ spec:
         - name: config
           configMap:
             # マウントしたいConfigMapの名前を指定します。
-            name: game-demo
+            name: config-example
             # ファイルとして作成するConfigMapのキーの配列
             items:
               - key: "game.properties"
