@@ -17,12 +17,15 @@ spec:
         tier: web
     spec:
       containers:
-        - name: hello-app
-          image: gcr.io/google-samples/hello-app:1.0
-          resources:               # 使用するCPU, Memoryの指定
-            requests:
-              cpu: 100m
-              memory: 100Mi
+      - name: hello-app
+        image: gcr.io/google-samples/hello-app:1.0
+        resources:               # 使用するCPU, Memoryの指定
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 1
+            memory: 200Mi
         env:                     # 環境変数
           - name: GET_HOSTS_FROM
             value: dns
