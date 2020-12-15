@@ -38,7 +38,7 @@ spec:
           - name: UI_PROPERTIES_FILE_NAME
             valueFrom:
               configMapKeyRef:
-                name: game-demo
+                name: config-example
                 key: ui_properties_file_name
         volumeMounts:
           - name: config
