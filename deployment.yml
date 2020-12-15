@@ -63,13 +63,11 @@ spec:
         nameservers:
           - 8.8.8.8
       volumes:
-        # Podレベルでボリュームを設定し、Pod内のコンテナにマウントします。
-        - name: config
+        - name: config           # Podレベルでボリュームを設定し、Pod内のコンテナにマウントします。
           configMap:
-            # マウントしたいConfigMapの名前を指定します。
-            name: config-example
-            # ファイルとして作成するConfigMapのキーの配列
-            items:
+            
+            name: config-example # マウントしたいConfigMapの名前を指定します。
+            items:               # ファイルとして作成するConfigMapのキーの配列
               - key: "game.properties"
                 path: "game.properties"
 
