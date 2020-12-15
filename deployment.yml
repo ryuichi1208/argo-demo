@@ -5,7 +5,7 @@ metadata:           # Deploymentのmetadata
   labels:
     app: hello
 spec:
-  replicas: 2       # ReplicaSetが生成・管理するPodの数
+  replicas: 3       # ReplicaSetが生成・管理するPodの数
   selector:
     matchLabels:
       app: hello    # ReplicaSetがPodを検索するときのLabel
