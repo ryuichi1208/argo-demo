@@ -35,6 +35,15 @@ spec:
               configMapKeyRef:
                 name: config-example
                 key: player_initial_lives
+          - name: UI_PROPERTIES_FILE_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: game-demo
+                key: ui_properties_file_name
+        volumeMounts:
+          - name: config
+            mountPath: "/config"
+            readOnly: true
         ports:
           - containerPort: 8080
         readinessProbe:          # ヘルスチェックの設定
@@ -53,6 +62,16 @@ spec:
       dnsConfig:
         nameservers:
           - 8.8.8.8
+      volumes:
+        # Podレベルでボリュームを設定し、Pod内のコンテナにマウントします。
+        - name: config
+          configMap:
+            # マウントしたいConfigMapの名前を指定します。
+            name: game-demo
+            # ファイルとして作成するConfigMapのキーの配列
+            items:
+              - key: "game.properties"
+                path: "game.properties"
 
 ---
 apiVersion: v1
