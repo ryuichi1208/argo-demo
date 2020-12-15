@@ -16,4 +16,4 @@ jobs:
       
       - name: Run Yaml lint
         run: |
-          docker container run --rm -it -v $(pwd):/data cytopia/yamllint .
+          docker container run --rm -v $(pwd):/data cytopia/yamllint:1.23 .
