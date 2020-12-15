@@ -17,3 +17,11 @@ jobs:
       - name: Run Yaml lint
         run: |
           docker container run --rm -v $(pwd):/data cytopia/yamllint:1.23 deployment.yml || :
+
+      - name: Run kubeval
+        run: |
+          docker container run -it -v $(pwd):/fixtures garethr/kubeval fixtures/deployment.ym || :
+          
+      - name: Run kube-score
+        run: |
+          docker container run -v $(pwd):/project zegl/kube-score:v1.7.0 score /project/deployment.yml || :
