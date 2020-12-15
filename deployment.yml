@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1 # apply時に使用するAPIの種別。リソース(kind)によって決まる
 kind: Deployment    # Deploymentのマニフェスト
 metadata:           # Deploymentのmetadata
