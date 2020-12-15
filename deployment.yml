@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: hello-app
-        image: gcr.io/google-samples/hello-app:2.0
+        image: gcr.io/google-samples/hello-app:1.0
         resources:               # 使用するCPU, Memoryの指定
           requests:
             cpu: 100m
@@ -36,7 +36,7 @@ spec:
           timeoutSeconds: 1      # ヘルスチェックのタイムアウト秒数。最小で1秒。Default: 1
           periodSeconds: 5       # ヘルスチェックの間隔。最小で1秒。Default: 10
           successThreshold: 1    # Failure状態の時、何回成功したらSuccessになるか。最小で1回。Default: 1
-        livenessProbe:          # ヘルスチェックの設定
+        livenessProbe:           # ヘルスチェックの設定
           httpGet:               # ヘルスチェックでアクセスするhttpエンドポイントの情報を書く。
             path: /
             port: 8080
