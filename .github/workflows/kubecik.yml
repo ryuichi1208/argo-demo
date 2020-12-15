@@ -20,7 +20,7 @@ jobs:
 
       - name: Run kubeval
         run: |
-          docker container run -it -v $(pwd):/fixtures garethr/kubeval fixtures/deployment.ym || :
+          docker container run -v $(pwd):/fixtures garethr/kubeval fixtures/deployment.ym || :
           
       - name: Run kube-score
         run: |
@@ -44,6 +44,6 @@ jobs:
 
       - name: Apply manifest
         run: |
-          kubectl apply -f manifest/nginx.yml
+          kubectl apply -f deployment.yml
           sleep 30
           kubectl get po -o wide
