@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,3 +25,24 @@ jobs:
       - name: Run kube-score
         run: |
           docker container run -v $(pwd):/project zegl/kube-score:v1.7.0 score /project/deployment.yml || :
+
+  kind:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: engineerd/setup-kind@v0.5.0
+        with:
+          config: .github/kind_config.yml
+          image: kindest/node:v1.20.0
+
+      - name: Dry run
+        run: |
+          kubectl apply --validate --dry-run -f deployment.yml
+
+      - name: Apply manifest
+        run: |
+          kubectl apply -f manifest/nginx.yml
+          sleep 30
+          kubectl get po -o wide
