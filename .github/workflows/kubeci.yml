@@ -25,6 +25,11 @@ jobs:
       - name: Run kube-score
         run: |
           docker container run -v $(pwd):/project zegl/kube-score:v1.7.0 score /project/deployment.yml || :
+          
+      - name: Run conftest
+        uses: instrumenta/conftest-action@master
+        with:
+          files: deployment.yml
 
   kind:
     runs-on: ubuntu-latest
